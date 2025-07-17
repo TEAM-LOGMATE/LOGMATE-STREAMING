@@ -1,7 +1,7 @@
-package com.logmate.streaming.producer.controller;
+package com.logmate.streaming.controller;
 
 import com.logmate.streaming.common.dto.SpringBootParsedLog;
-import com.logmate.streaming.producer.service.KafkaLogProducer;
+import com.logmate.streaming.producer.log.producer.KafkaLogProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
