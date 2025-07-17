@@ -1,5 +1,6 @@
 package com.logmate.streaming.consumer.storage.service;
 
+import com.logmate.streaming.common.constant.opensearch.OpenSearchConstant;
 import com.logmate.streaming.common.dto.SpringBootParsedLog;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,11 +16,12 @@ import org.springframework.stereotype.Service;
 public class OpenSearchLogStorageService implements LogStorageService{
 
   private final OpenSearchClient openSearchClient;
+  private final OpenSearchConstant openSearchConstant;
 
   public void storeLog(SpringBootParsedLog logData) {
     try {
       IndexRequest<SpringBootParsedLog> request = new IndexRequest.Builder<SpringBootParsedLog>()
-          .index("parsed-logs")
+          .index(openSearchConstant.index.LOG)
           .document(logData)
           .build();
 

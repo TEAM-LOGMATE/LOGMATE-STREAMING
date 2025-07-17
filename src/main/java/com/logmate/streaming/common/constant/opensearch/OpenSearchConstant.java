@@ -8,4 +8,5 @@ import org.springframework.stereotype.Component;
 public class OpenSearchConstant {
 
   public final OpenSearchServer server;
+  public final OpenSearchIndex index;
 }
