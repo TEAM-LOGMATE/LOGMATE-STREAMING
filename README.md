@@ -80,7 +80,10 @@ com/logmate/streaming
 ```
 ---
 ## 📡 API
- Wiki 참조
+
+LogMate Streaming Server는 다양한 애플리케이션 로그를 수집하고 분석하기 위해 Agent에서 전송하는 로그 데이터를 수신하는 RESTful API 를 제공하고, 실시간 스트리밍을 위한 WebSocket 인터페이스를 제공합니다.
+> 전체 API 설명은 [Wiki](https://github.com/TEAM-LOGMATE/LOGMATE-STREAMING/wiki)에서 확인할 수 있습니다.
+
 ---
 ## 🛠 빌드 & 실행
 
