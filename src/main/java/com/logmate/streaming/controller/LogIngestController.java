@@ -3,7 +3,7 @@ package com.logmate.streaming.controller;
 import com.logmate.streaming.common.constant.log.LogType;
 import com.logmate.streaming.common.dto.log.SpringBootParsedLog;
 import com.logmate.streaming.common.dto.log.TomcatAccessParsedLog;
-import com.logmate.streaming.producer.GenericKafkaLogProducer;
+import com.logmate.streaming.producer.LogProducer;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/api/v1/streaming/logs")
 public class LogIngestController {
 
-  private final GenericKafkaLogProducer genericKafkaLogProducer;
+  private final LogProducer logProducer;
 
   /**
    * 공통 로그 수신 처리 메소드
@@ -33,7 +33,7 @@ public class LogIngestController {
 
     return logMono
         .flatMapMany(Flux::fromIterable)
-        .flatMap(log -> genericKafkaLogProducer.sendLog(log, logType, agentId, thNum))
+        .flatMap(log -> logProducer.sendLog(log, logType, agentId, thNum))
         .then() // 모든 로그 전송 완료 후 Mono<Void> 반환
         .doOnError(e -> log.error(
             "[LogIngestController] Failed to process {} log. agentId: {}, thNum: {}, error: {}",
