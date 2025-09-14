@@ -27,13 +27,17 @@ public class LogIngestController {
 
   /**
    * 공통 로그 수신 처리 메소드
+   *
+   * 확장 방법:
+   *    * - 새로운 로그 타입을 수신할 수 있도록 추가하려면 LogType enum과 DTO를 정의하고,
+   *    *   아래 @PostMapping 메서드를 새로 만들어 이 메소드를 호출하면 된다.
    */
   private <T> Mono<Void> receiveLogs(Mono<List<T>> logMono, LogType logType, String agentId, String thNum) {
     log.info("[LogIngestController] Received {} logs. agentId: {}, thNum: {}", logType, agentId, thNum);
 
     return logMono
         .flatMapMany(Flux::fromIterable)
-        .flatMap(log -> logProducer.sendLog(log, logType, agentId, thNum))
+        .flatMap(log -> logProducer.sendLog(log, logType, agentId, thNum), 40)
         .then() // 모든 로그 전송 완료 후 Mono<Void> 반환
         .doOnError(e -> log.error(
             "[LogIngestController] Failed to process {} log. agentId: {}, thNum: {}, error: {}",
