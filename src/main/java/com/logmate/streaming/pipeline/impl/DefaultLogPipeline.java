@@ -21,6 +21,7 @@ public class DefaultLogPipeline implements LogPipeline {
 
   @Override
   public Mono<Void> process(LogEnvelope env) {
+    log.info("[DefaultLogPipeline] Processing log: {}", env);
     // order 기준 정렬 후 그룹핑
     return Flux.fromIterable(processors.stream()
             .collect(Collectors.groupingBy(

@@ -49,7 +49,7 @@ public class KafkaLogProducer implements LogProducer {
             // 로깅
             future.whenComplete((result, ex) -> {
               if (ex == null && result != null) {
-                log.debug(
+                log.info(
                     "[GenericKafkaLogProducer] Log sent. size={} bytes, topic={}, partition={}, offset={}, agentId={}, logType={}",
                     json.length(),
                     result.getRecordMetadata().topic(),

@@ -37,7 +37,7 @@ public class KafkaLogConsumer implements LogConsumer {
   @KafkaListener(topics = "${kafka.topic.log}", groupId = "${spring.kafka.consumer.group-id}")
   public void consume(String json) {
     try {
-      log.debug("[KafkaLogConsumer] Consumed log: {}", json);
+      log.info("[KafkaLogConsumer] Consumed log: {}", json);
 
       // JSON 문자열 → LogEnvelope 객체로 변환
       LogEnvelope env = LogParserUtil.parse(json);

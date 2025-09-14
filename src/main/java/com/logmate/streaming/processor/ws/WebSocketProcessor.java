@@ -28,7 +28,7 @@ public class WebSocketProcessor implements LogProcessor {
   public Mono<LogEnvelope> process(LogEnvelope env) {
     return Mono.fromRunnable(() -> {
           wsHandler.push(env.getAgentId(), env.getThNum(), env);
-          log.debug("[WebSocketProcessor] Log pushed via WebSocket. agentId={}, thNum={}",
+          log.info("[WebSocketProcessor] Log pushed via WebSocket. agentId={}, thNum={}",
               env.getAgentId(), env.getThNum());
         })
         .onErrorResume(e -> {
