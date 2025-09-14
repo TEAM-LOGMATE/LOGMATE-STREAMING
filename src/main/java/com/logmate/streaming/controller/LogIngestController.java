@@ -18,26 +18,55 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/log-mate/logs")
+@RequestMapping("/api/v1/streaming/logs")
 public class LogIngestController {
 
   private final GenericKafkaLogProducer genericKafkaLogProducer;
 
+  /**
+   * 공통 로그 수신 처리 메소드
+   */
+  private <T> Mono<Void> receiveLog(Mono<T> logMono, LogType logType, String agentId, String thNum) {
+    log.info("[LogIngestController] Received {} log. agentId: {}, thNum: {}", logType, agentId, thNum);
+
+    return logMono
+        .flatMap(log -> genericKafkaLogProducer.sendLog(log, logType, agentId, thNum))
+        .doOnError(e -> log.error(
+            "[LogIngestController] Failed to process {} log. agentId: {}, thNum: {}, error: {}",
+            logType, agentId, thNum, e.getMessage(), e
+        ));
+  }
+
+  /**
+   * 로그 타입 별 HTTP Request 수신 메소드
+   */
   @PostMapping("/springboot/{agentId}/{thNum}")
   @ResponseStatus(HttpStatus.OK)
-  public Mono<Void> receiveSpringLog(@RequestBody Mono<SpringBootParsedLog> logMessageMono,
-      @PathVariable String agentId, @PathVariable String thNum) {
-    log.info("[LogIngestController] Received SpringBoot log. agentId: {}", agentId);
-    return logMessageMono
-        .flatMap(log -> genericKafkaLogProducer.sendLog(log, LogType.SPRING_BOOT, agentId, thNum));
+  public Mono<Void> receiveSpringLog(
+      @RequestBody Mono<SpringBootParsedLog> logMessageMono,
+      @PathVariable String agentId,
+      @PathVariable String thNum
+  ) {
+    return receiveLog(logMessageMono, LogType.SPRING_BOOT, agentId, thNum);
   }
 
   @PostMapping("/tomcat/{agentId}/{thNum}")
   @ResponseStatus(HttpStatus.OK)
-  public Mono<Void> receiveTomcatLog(@RequestBody Mono<TomcatAccessParsedLog> logMessageMono,
-      @PathVariable String agentId, @PathVariable String thNum) {
-    log.info("[LogIngestController] Received TomcatAccess log. agentId: {}", agentId);
-    return logMessageMono
-        .flatMap(log -> genericKafkaLogProducer.sendLog(log, LogType.TOMCAT_ACCESS, agentId, thNum));
+  public Mono<Void> receiveTomcatLog(
+      @RequestBody Mono<TomcatAccessParsedLog> logMessageMono,
+      @PathVariable String agentId,
+      @PathVariable String thNum
+  ) {
+    return receiveLog(logMessageMono, LogType.TOMCAT_ACCESS, agentId, thNum);
   }
 }
+
+// TODO: agentId 유효성 검증 필요
+//   - 빈 문자열 / null 체크
+//   - 정의된 형식(UUID, 숫자, 특정 prefix 등) 여부 확인
+//   - 존재하지 않는 agentId일 경우 400 Bad Request 반환
+
+// TODO: thNum 유효성 검증 필요
+//   - 빈 문자열 / null 체크
+//   - 정수인지 여부 검증 (숫자가 아닐 경우 예외 처리)
+//   - 허용된 범위(thNum >= 0 등) 확인
