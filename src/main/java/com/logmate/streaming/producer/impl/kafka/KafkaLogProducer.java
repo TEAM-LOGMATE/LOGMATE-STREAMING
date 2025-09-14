@@ -17,7 +17,7 @@ import reactor.core.scheduler.Schedulers;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class GenericKafkaLogProducer implements LogProducer {
+public class KafkaLogProducer implements LogProducer {
 
   private final KafkaTemplate<String, String> kafkaTemplate;
   private final KafkaConstant kafkaConstant;
