@@ -1,14 +1,14 @@
 package com.logmate.streaming.processor;
 
 import com.logmate.streaming.common.constant.ai.AiConstant;
-import com.logmate.streaming.processor.ai.processor.AiLogProcessor;
-import com.logmate.streaming.processor.storage.processor.LogStorageProcessor;
+import com.logmate.streaming.processor.ai.AiAnalyzeTomcatAccessLogProcessor;
+import com.logmate.streaming.processor.ai.client.AiClient;
+import com.logmate.streaming.processor.storage.LogStorageProcessor;
 import com.logmate.streaming.processor.storage.service.LogStorageService;
 import com.logmate.streaming.processor.ws.handler.LogWebSocketHandler;
-import com.logmate.streaming.processor.ws.processor.WebSocketProcessor;
+import com.logmate.streaming.processor.ws.WebSocketProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * 로그 처리 파이프라인에 참여하는 Processor들을 등록하는 클래스.
@@ -25,8 +25,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class LogProcessorRegistry {
 
   @Bean
-  public LogProcessor aiProcessor(WebClient aiWebClient, AiConstant constant) {
-    return new AiLogProcessor(aiWebClient, constant, 0);
+  public LogProcessor aiProcessor(AiClient aiClient, AiConstant constant) {
+    return new AiAnalyzeTomcatAccessLogProcessor(aiClient, constant, 0);
   }
 
   @Bean

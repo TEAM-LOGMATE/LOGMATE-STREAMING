@@ -1,20 +1,19 @@
-package com.logmate.streaming.processor.ai.processor;
+package com.logmate.streaming.processor.ai;
 
 import com.logmate.streaming.common.constant.ai.AiConstant;
 import com.logmate.streaming.common.dto.log.TomcatAccessParsedLog;
 import com.logmate.streaming.common.dto.log.LogEnvelope;
 import com.logmate.streaming.processor.LogProcessor;
-import com.logmate.streaming.processor.ai.dto.AiResponse;
+import com.logmate.streaming.processor.ai.client.AiClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Slf4j
 @RequiredArgsConstructor
-public class AiLogProcessor implements LogProcessor {
+public class AiAnalyzeTomcatAccessLogProcessor implements LogProcessor {
 
-  private final WebClient aiWebClient;
+  private final AiClient aiClient;
   private final AiConstant constant;
   private final int order;
 
@@ -38,27 +37,14 @@ public class AiLogProcessor implements LogProcessor {
    */
   @Override
   public Mono<LogEnvelope> process(LogEnvelope env) {
-    if (!supports(env)) {
-      log.info("[AI] failed, This processor does not support this log type:{}", env.getLogType());
-      return Mono.just(env);
-    }
-
     TomcatAccessParsedLog t = (TomcatAccessParsedLog) env.getLog();
 
-    return aiWebClient.post()
-        .uri(constant.getUri())
-        .bodyValue(t)
-        .retrieve()
-        .bodyToMono(AiResponse.class)
-        .doOnSubscribe(sub -> log.info("[AI] Sending log to AI server. agentId={}, logType={}",
-            env.getAgentId(), env.getLogType()))
-        .doOnSuccess(ai -> log.info("[AI] Response received. agentId={}, logType={}, score={}",
-            env.getAgentId(), env.getLogType(), ai.getScore()))
+    return aiClient.analyze(t, constant.getPath())
+        .doOnSubscribe(sub -> log.info("[AI] Sending Tomcat log. agentId={}", env.getAgentId()))
         .map(ai -> env.setAiScore(ai.getScore()))
         .onErrorResume(e -> {
-          log.error("[AI] Request failed. agentId={}, logType={}, error={}",
-              env.getAgentId(), env.getLogType(), e.getMessage(), e);
-          return Mono.just(env); // fallback: 점수 없이 원본 로그 반환
+          log.error("[AI] Tomcat analysis failed. agentId={}, error={}", env.getAgentId(), e.getMessage(), e);
+          return Mono.just(env);
         });
   }
 
