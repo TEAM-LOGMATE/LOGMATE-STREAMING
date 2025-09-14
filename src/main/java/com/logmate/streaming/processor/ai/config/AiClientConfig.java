@@ -19,7 +19,7 @@ public class AiClientConfig {
         .responseTimeout(Duration.ofMillis(props.getReadTimeoutMs()));
 
     return builder
-        .baseUrl(props.getBaseUrl())
+        .baseUrl(props.getOrigin())
         .clientConnector(new ReactorClientHttpConnector(httpClient))
         .build();
   }
