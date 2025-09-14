@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'temurin'
+          distribution: 'openjdk'
 
       - name: Gradle 캐시 설정
         uses: actions/cache@v3
