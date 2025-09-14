@@ -1,6 +1,6 @@
 package com.logmate.streaming.processor.storage;
 
-import com.logmate.streaming.common.dto.log.LogEnvelope;
+import com.logmate.streaming.common.log.LogEnvelope;
 import com.logmate.streaming.processor.LogProcessor;
 import com.logmate.streaming.processor.storage.service.LogStorageService;
 import lombok.RequiredArgsConstructor;

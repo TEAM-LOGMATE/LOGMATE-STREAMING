@@ -1,6 +1,6 @@
 package com.logmate.streaming.consumer.impl.kafka;
 
-import com.logmate.streaming.common.dto.log.LogEnvelope;
+import com.logmate.streaming.common.log.LogEnvelope;
 import com.logmate.streaming.consumer.LogConsumer;
 import com.logmate.streaming.common.util.LogParserUtil;
 import com.logmate.streaming.pipeline.LogPipeline;

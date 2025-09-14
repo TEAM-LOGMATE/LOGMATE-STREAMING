@@ -1,6 +1,6 @@
 package com.logmate.streaming.producer;
 
-import com.logmate.streaming.common.constant.log.LogType;
+import com.logmate.streaming.common.log.LogType;
 import reactor.core.publisher.Mono;
 
 /**

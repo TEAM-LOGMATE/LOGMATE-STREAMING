@@ -1,4 +1,4 @@
-package com.logmate.streaming.common.constant.log;
+package com.logmate.streaming.common.log;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

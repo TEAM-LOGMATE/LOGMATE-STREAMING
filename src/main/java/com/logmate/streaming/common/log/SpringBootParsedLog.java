@@ -1,4 +1,4 @@
-package com.logmate.streaming.common.dto.log;
+package com.logmate.streaming.common.log;
 
 import java.time.LocalDateTime;
 import lombok.Data;

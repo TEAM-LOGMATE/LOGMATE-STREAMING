@@ -1,6 +1,6 @@
 package com.logmate.streaming.processor;
 
-import com.logmate.streaming.common.dto.log.LogEnvelope;
+import com.logmate.streaming.common.log.LogEnvelope;
 import reactor.core.publisher.Mono;
 
 /**

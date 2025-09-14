@@ -1,8 +1,8 @@
 package com.logmate.streaming.processor.ai;
 
 import com.logmate.streaming.common.constant.ai.AiConstant;
-import com.logmate.streaming.common.dto.log.TomcatAccessParsedLog;
-import com.logmate.streaming.common.dto.log.LogEnvelope;
+import com.logmate.streaming.common.log.TomcatAccessParsedLog;
+import com.logmate.streaming.common.log.LogEnvelope;
 import com.logmate.streaming.processor.LogProcessor;
 import com.logmate.streaming.processor.ai.client.AiClient;
 import lombok.RequiredArgsConstructor;

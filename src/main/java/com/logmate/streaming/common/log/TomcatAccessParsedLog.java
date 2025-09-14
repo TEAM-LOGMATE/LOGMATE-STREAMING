@@ -1,4 +1,4 @@
-package com.logmate.streaming.common.dto.log;
+package com.logmate.streaming.common.log;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

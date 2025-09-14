@@ -1,4 +1,4 @@
-package com.logmate.streaming.common.dto.log;
+package com.logmate.streaming.common.log;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -3,7 +3,7 @@ package com.logmate.streaming.producer.impl.kafka;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.logmate.streaming.common.constant.kafka.KafkaConstant;
-import com.logmate.streaming.common.constant.log.LogType;
+import com.logmate.streaming.common.log.LogType;
 import com.logmate.streaming.producer.LogProducer;
 import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;

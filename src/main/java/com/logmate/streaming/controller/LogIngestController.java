@@ -1,8 +1,8 @@
 package com.logmate.streaming.controller;
 
-import com.logmate.streaming.common.constant.log.LogType;
-import com.logmate.streaming.common.dto.log.SpringBootParsedLog;
-import com.logmate.streaming.common.dto.log.TomcatAccessParsedLog;
+import com.logmate.streaming.common.log.LogType;
+import com.logmate.streaming.common.log.SpringBootParsedLog;
+import com.logmate.streaming.common.log.TomcatAccessParsedLog;
 import com.logmate.streaming.producer.LogProducer;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class LogIngestController {
    * 공통 로그 수신 처리 메소드
    *
    * 확장 방법:
-   *    * - 새로운 로그 타입을 수신할 수 있도록 추가하려면 LogType enum과 DTO를 정의하고,
+   *    * - 새로운 로그 타입을 수신할 수 있도록 추가하려면 LogType enum과 log data를 정의하고,
    *    *   아래 @PostMapping 메서드를 새로 만들어 이 메소드를 호출하면 된다.
    */
   private <T> Mono<Void> receiveLogs(Mono<List<T>> logMono, LogType logType, String agentId, String thNum) {

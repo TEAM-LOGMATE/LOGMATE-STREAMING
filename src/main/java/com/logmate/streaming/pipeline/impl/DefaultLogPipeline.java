@@ -1,6 +1,6 @@
 package com.logmate.streaming.pipeline.impl;
 
-import com.logmate.streaming.common.dto.log.LogEnvelope;
+import com.logmate.streaming.common.log.LogEnvelope;
 import com.logmate.streaming.pipeline.LogPipeline;
 import com.logmate.streaming.processor.LogProcessor;
 import java.util.List;
