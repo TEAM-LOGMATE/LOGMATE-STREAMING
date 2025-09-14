@@ -10,7 +10,7 @@ package com.logmate.streaming.consumer;
  * 구현체는 메시지를 파싱하고 파이프라인에 전달하며,
  * 실패 시 DLQ 전송이나 알림 등 에러 처리 전략을 적용할 수 있다.
  *
- * 기본 구현체 : UnifiedLogConsumer
+ * 기본 구현체 : KafkaLogConsumer
  */
 public interface LogConsumer {
   void consume(String message);

@@ -2,9 +2,8 @@ package com.logmate.streaming.consumer.impl.kafka;
 
 import com.logmate.streaming.common.dto.log.LogEnvelope;
 import com.logmate.streaming.consumer.LogConsumer;
-import com.logmate.streaming.processor.GenericLogPipeline;
 import com.logmate.streaming.common.util.LogParserUtil;
-import com.logmate.streaming.processor.LogPipeline;
+import com.logmate.streaming.pipeline.LogPipeline;
 import com.logmate.streaming.producer.DlqProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
