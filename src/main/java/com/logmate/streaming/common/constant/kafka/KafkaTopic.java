@@ -8,4 +8,7 @@ public class KafkaTopic {
 
   @Value("${kafka.topic.log}")
   public String LOG_TOPIC;
+
+  @Value("${kafka.topic.dlq}")
+  public String DLQ_TOPIC;
 }
