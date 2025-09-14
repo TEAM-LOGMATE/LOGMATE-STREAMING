@@ -1,4 +1,4 @@
-package com.logmate.streaming.processor.ws.processor;
+package com.logmate.streaming.processor.ws;
 
 import com.logmate.streaming.common.dto.log.LogEnvelope;
 import com.logmate.streaming.processor.LogProcessor;
