@@ -1,6 +1,8 @@
-package com.logmate.streaming.processor;
+package com.logmate.streaming.pipeline.impl;
 
 import com.logmate.streaming.common.dto.log.LogEnvelope;
+import com.logmate.streaming.pipeline.LogPipeline;
+import com.logmate.streaming.processor.LogProcessor;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -13,7 +15,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class GenericLogPipeline implements LogPipeline {
+public class DefaultLogPipeline implements LogPipeline {
 
   private final List<LogProcessor> processors;
 
