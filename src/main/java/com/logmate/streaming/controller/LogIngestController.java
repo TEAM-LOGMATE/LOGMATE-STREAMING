@@ -4,6 +4,7 @@ import com.logmate.streaming.common.constant.log.LogType;
 import com.logmate.streaming.common.dto.log.SpringBootParsedLog;
 import com.logmate.streaming.common.dto.log.TomcatAccessParsedLog;
 import com.logmate.streaming.producer.GenericKafkaLogProducer;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -26,11 +28,13 @@ public class LogIngestController {
   /**
    * 공통 로그 수신 처리 메소드
    */
-  private <T> Mono<Void> receiveLog(Mono<T> logMono, LogType logType, String agentId, String thNum) {
-    log.info("[LogIngestController] Received {} log. agentId: {}, thNum: {}", logType, agentId, thNum);
+  private <T> Mono<Void> receiveLogs(Mono<List<T>> logMono, LogType logType, String agentId, String thNum) {
+    log.info("[LogIngestController] Received {} logs. agentId: {}, thNum: {}", logType, agentId, thNum);
 
     return logMono
+        .flatMapMany(Flux::fromIterable)
         .flatMap(log -> genericKafkaLogProducer.sendLog(log, logType, agentId, thNum))
+        .then() // 모든 로그 전송 완료 후 Mono<Void> 반환
         .doOnError(e -> log.error(
             "[LogIngestController] Failed to process {} log. agentId: {}, thNum: {}, error: {}",
             logType, agentId, thNum, e.getMessage(), e
@@ -42,22 +46,22 @@ public class LogIngestController {
    */
   @PostMapping("/springboot/{agentId}/{thNum}")
   @ResponseStatus(HttpStatus.OK)
-  public Mono<Void> receiveSpringLog(
-      @RequestBody Mono<SpringBootParsedLog> logMessageMono,
+  public Mono<Void> receiveSpringLogs(
+      @RequestBody Mono<List<SpringBootParsedLog>> logMessageMono,
       @PathVariable String agentId,
       @PathVariable String thNum
   ) {
-    return receiveLog(logMessageMono, LogType.SPRING_BOOT, agentId, thNum);
+    return receiveLogs(logMessageMono, LogType.SPRING_BOOT, agentId, thNum);
   }
 
   @PostMapping("/tomcat/{agentId}/{thNum}")
   @ResponseStatus(HttpStatus.OK)
-  public Mono<Void> receiveTomcatLog(
-      @RequestBody Mono<TomcatAccessParsedLog> logMessageMono,
+  public Mono<Void> receiveTomcatLogs(
+      @RequestBody Mono<List<TomcatAccessParsedLog>> logMessageMono,
       @PathVariable String agentId,
       @PathVariable String thNum
   ) {
-    return receiveLog(logMessageMono, LogType.TOMCAT_ACCESS, agentId, thNum);
+    return receiveLogs(logMessageMono, LogType.TOMCAT_ACCESS, agentId, thNum);
   }
 }
 
