@@ -5,6 +5,7 @@ import com.logmate.streaming.common.log.TomcatAccessParsedLog;
 import com.logmate.streaming.common.log.LogEnvelope;
 import com.logmate.streaming.processor.LogProcessor;
 import com.logmate.streaming.processor.ai.client.AiClient;
+import com.logmate.streaming.processor.ai.dto.AiAnalyzeTomcatAccessLogRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -38,8 +39,9 @@ public class AiAnalyzeTomcatAccessLogProcessor implements LogProcessor {
   @Override
   public Mono<LogEnvelope> process(LogEnvelope env) {
     TomcatAccessParsedLog t = (TomcatAccessParsedLog) env.getLog();
+    AiAnalyzeTomcatAccessLogRequest request = AiAnalyzeTomcatAccessLogRequest.from(t);
 
-    return aiClient.analyze(t, constant.getPath())
+    return aiClient.analyze(request, constant.getPath())
         .doOnSubscribe(sub -> log.info("[AI] Sending Tomcat log. agentId={}", env.getAgentId()))
         .map(ai -> env.setAiScore(ai.getScore()))
         .onErrorResume(e -> {
