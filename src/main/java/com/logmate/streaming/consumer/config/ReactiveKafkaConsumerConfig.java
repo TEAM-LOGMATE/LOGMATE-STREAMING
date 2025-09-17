@@ -22,8 +22,9 @@ public class ReactiveKafkaConsumerConfig {
 
   @Bean
   public ReceiverOptions<String, String> receiverOptions() {
+    log.info("Creating Kafka receiver options {}", kafkaConstant.server.bootstrapServers);
     Map<String, Object> props = new HashMap<>();
-    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConstant.server.URL);
+    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConstant.server.bootstrapServers);
     props.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaConstant.groupId);
     props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
     props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);

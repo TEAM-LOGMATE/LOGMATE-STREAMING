@@ -12,5 +12,6 @@ public class KafkaServer {
   @Value("${kafka.server.port}")
   public String PORT;
 
-  public String URL = HOST + ":" + PORT;
+  @Value("${spring.kafka.bootstrap-servers}")
+  public String bootstrapServers;
 }

@@ -1,7 +1,7 @@
 package com.logmate.streaming.processor.storage.service;
 
 import com.logmate.streaming.common.constant.opensearch.OpenSearchConstant;
-import com.logmate.streaming.common.dto.log.LogEnvelope;
+import com.logmate.streaming.common.log.LogEnvelope;
 import java.time.Instant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

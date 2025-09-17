@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @ConfigurationProperties(prefix = "ai")
 public class AiConstant {
-  public String baseUrl;
-  public String uri;
+  public String origin;
+  public String path;
   public int connectionTimeoutMs;
   public int readTimeoutMs;
 }
