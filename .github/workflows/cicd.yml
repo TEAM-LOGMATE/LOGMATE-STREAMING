@@ -3,7 +3,7 @@ name: STREAMING CI
 on:
   push:
     branches:
-      - refactor/mvp/#1
+      - main
 
 jobs:
   build-and-deploy:
