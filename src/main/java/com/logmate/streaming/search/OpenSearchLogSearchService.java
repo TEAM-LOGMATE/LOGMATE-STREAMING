@@ -41,7 +41,7 @@ public class OpenSearchLogSearchService {
           .must(m -> m.term(t -> t.field("thNum").value(FieldValue.of(thNum))))
           .must(m -> m.term(t -> t.field("logType").value(FieldValue.of(logType))))
           .must(m -> m.range(r -> r
-              .field("timestamp")
+              .field("log.timestamp")
               .gte(JsonData.of(startTime))
               .lte(JsonData.of(endTime))
           ))
@@ -51,7 +51,7 @@ public class OpenSearchLogSearchService {
       SearchRequest request = SearchRequest.of(s -> s
           .index(indexPattern)
           .size(1000) // 내부 기본값
-          .sort(sort -> sort.field(f -> f.field("timestamp").order(SortOrder.Desc)))
+          .sort(sort -> sort.field(f -> f.field("log.timestamp").order(SortOrder.Desc)))
           .query(query)
       );
 
