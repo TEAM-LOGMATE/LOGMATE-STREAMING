@@ -2,6 +2,7 @@ package com.logmate.streaming.processor.storage.config;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.logmate.streaming.common.constant.opensearch.OpenSearchConstant;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,10 @@ public class OpenSearchConfig {
         new HttpHost(openSearchConstant.server.HOST, openSearchConstant.server.PORT, openSearchConstant.server.SCHEME)
     ).build();
 
-    ObjectMapper objectMapper = new ObjectMapper();
-    objectMapper.registerModule(new JavaTimeModule());
+    ObjectMapper objectMapper = new ObjectMapper()
+        .registerModule(new JavaTimeModule())
+        .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // 문자열로 직렬화
+
 
     JacksonJsonpMapper jsonpMapper = new JacksonJsonpMapper(objectMapper);
 
