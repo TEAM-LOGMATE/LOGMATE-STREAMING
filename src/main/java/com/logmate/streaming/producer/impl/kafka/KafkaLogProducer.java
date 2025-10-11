@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.logmate.streaming.common.constant.kafka.KafkaConstant;
 import com.logmate.streaming.common.log.LogType;
+import com.logmate.streaming.common.log.ParsedLogData;
+import com.logmate.streaming.common.util.ParsedLogMapper;
 import com.logmate.streaming.producer.LogProducer;
 import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,7 @@ public class KafkaLogProducer implements LogProducer {
   private final ObjectMapper objectMapper;
 
   @Override
-  public Mono<Void> sendLog(Object logData, LogType logType, String agentId, String thNum) {
+  public Mono<Void> sendLog(ParsedLogData logData, LogType logType, String agentId, String thNum) {
     return Mono.fromCallable(() -> {
           try {
             // 로그 데이터 표준화
