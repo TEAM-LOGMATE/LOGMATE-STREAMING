@@ -2,7 +2,12 @@ package com.logmate.streaming.processor.storage.service;
 
 import com.logmate.streaming.common.constant.opensearch.OpenSearchConstant;
 import com.logmate.streaming.common.log.LogEnvelope;
+import com.logmate.streaming.common.log.ParsedLogData;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.opensearch.client.opensearch.OpenSearchClient;
@@ -21,7 +26,21 @@ public class OpenSearchLogStorageService implements LogStorageService {
   @Override
   public void storeLogEnvelope(LogEnvelope env) {
     try {
-      String index = buildIndexName(env); // 예: log-tomcat-2025.08.20
+
+      // event_time 기준 날짜 계산
+      LocalDate eventDate = env.getLog().getTimestamp()
+          .atZone(ZoneOffset.UTC)
+          .toLocalDate();
+
+      LocalDate today = LocalDate.now(ZoneOffset.UTC);
+
+      long daysOld = ChronoUnit.DAYS.between(eventDate, today);
+      if (daysOld > 30) {
+        log.info("Skipped storing old log ({} days old)", daysOld);
+        return; // 30일 초과 데이터는 저장하지 않음
+      }
+
+      String index = buildIndexName(env); // 예: logmate-tomcat-logs-2025.08.20
       IndexRequest.Builder<LogEnvelope> b = new IndexRequest.Builder<LogEnvelope>()
           .index(index)
           .document(env);
@@ -38,8 +57,16 @@ public class OpenSearchLogStorageService implements LogStorageService {
   }
 
   private String buildIndexName(LogEnvelope env) {
-    String date = java.time.format.DateTimeFormatter.ofPattern("yyyy.MM.dd")
-        .withZone(java.time.ZoneOffset.UTC).format(Instant.now());
-    return constant.index.LOG + "-" + env.getLogType() + "-" + date;
+    String date = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+        .withZone(java.time.ZoneOffset.UTC)
+        .format(env.getLog().getTimestamp());
+
+    return String.format(
+        "%s-%s-%s-%s",
+        constant.index.LOG,
+        env.getLogType().getStr().toLowerCase(),
+        constant.index.LOG,
+        date
+    );
   }
 }
