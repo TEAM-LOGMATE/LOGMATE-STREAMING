@@ -1,6 +1,8 @@
 package com.logmate.streaming.producer;
 
 import com.logmate.streaming.common.log.LogType;
+import com.logmate.streaming.common.log.ParsedLogData;
+import com.logmate.streaming.common.util.ParsedLogMapper;
 import reactor.core.publisher.Mono;
 
 /**
@@ -14,5 +16,5 @@ import reactor.core.publisher.Mono;
  * 기본 구현체 : KafkaLogProducer
  */
 public interface LogProducer {
-  Mono<Void> sendLog(Object logData, LogType logType, String agentId, String thNum);
+  Mono<Void> sendLog(ParsedLogData logData, LogType logType, String agentId, String thNum);
 }

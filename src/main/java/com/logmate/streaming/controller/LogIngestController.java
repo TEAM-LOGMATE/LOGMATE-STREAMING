@@ -1,8 +1,12 @@
 package com.logmate.streaming.controller;
 
+import com.logmate.streaming.common.dto.SpringBootParsedLogStreamReq;
+import com.logmate.streaming.common.dto.TomcatAccessParsedLogStreamReq;
 import com.logmate.streaming.common.log.LogType;
+import com.logmate.streaming.common.log.ParsedLogData;
 import com.logmate.streaming.common.log.SpringBootParsedLog;
 import com.logmate.streaming.common.log.TomcatAccessParsedLog;
+import com.logmate.streaming.common.util.ParsedLogMapper;
 import com.logmate.streaming.producer.LogProducer;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -32,11 +36,10 @@ public class LogIngestController {
    *    * - 새로운 로그 타입을 수신할 수 있도록 추가하려면 LogType enum과 log data를 정의하고,
    *    *   아래 @PostMapping 메서드를 새로 만들어 이 메소드를 호출하면 된다.
    */
-  private <T> Mono<Void> receiveLogs(Mono<List<T>> logMono, LogType logType, String agentId, String thNum) {
+  private Mono<Void> receiveLogs(Flux<? extends ParsedLogData> logFlux, LogType logType, String agentId, String thNum) {
     log.info("[LogIngestController] Received {} logs. agentId: {}, thNum: {}", logType, agentId, thNum);
 
-    return logMono
-        .flatMapMany(Flux::fromIterable)
+    return logFlux
         .flatMap(log -> logProducer.sendLog(log, logType, agentId, thNum), 40)
         .then() // 모든 로그 전송 완료 후 Mono<Void> 반환
         .doOnError(e -> log.error(
@@ -51,21 +54,31 @@ public class LogIngestController {
   @PostMapping("/springboot/{agentId}/{thNum}")
   @ResponseStatus(HttpStatus.OK)
   public Mono<Void> receiveSpringLogs(
-      @RequestBody Mono<List<SpringBootParsedLog>> logMessageMono,
+      @RequestBody Mono<List<SpringBootParsedLogStreamReq>> logMessageMono,
       @PathVariable String agentId,
       @PathVariable String thNum
   ) {
-    return receiveLogs(logMessageMono, LogType.SPRING_BOOT, agentId, thNum);
+    Flux<SpringBootParsedLog> parsedLogMono = logMessageMono.map(dtoList ->
+        dtoList.stream()
+            .map(ParsedLogMapper::toEntity) // DTO -> ParsedLog 변환
+            .toList()
+    ).flatMapMany(Flux::fromIterable);
+    return receiveLogs(parsedLogMono, LogType.SPRING_BOOT, agentId, thNum);
   }
 
   @PostMapping("/tomcat/{agentId}/{thNum}")
   @ResponseStatus(HttpStatus.OK)
   public Mono<Void> receiveTomcatLogs(
-      @RequestBody Mono<List<TomcatAccessParsedLog>> logMessageMono,
+      @RequestBody Mono<List<TomcatAccessParsedLogStreamReq>> logMessageMono,
       @PathVariable String agentId,
       @PathVariable String thNum
   ) {
-    return receiveLogs(logMessageMono, LogType.TOMCAT_ACCESS, agentId, thNum);
+    Flux<TomcatAccessParsedLog> parsedLogMono = logMessageMono.map(dtoList ->
+        dtoList.stream()
+            .map(ParsedLogMapper::toEntity) // DTO -> ParsedLog 변환
+            .toList()
+    ).flatMapMany(Flux::fromIterable);
+    return receiveLogs(parsedLogMono, LogType.TOMCAT_ACCESS, agentId, thNum);
   }
 }
 

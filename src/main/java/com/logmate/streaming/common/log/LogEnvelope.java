@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LogEnvelope {
 
-  private String logType;   // springboot, tomcat
-  private Object log;       // SpringBootParsedLog | TomcatAccessParsedLog
+  private LogType logType;
+  private ParsedLogData log;
   private String agentId;
   private String thNum;
   private Float aiScore;
