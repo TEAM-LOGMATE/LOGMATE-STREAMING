@@ -1,19 +1,16 @@
 package com.logmate.streaming.common.log;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.Instant;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class TomcatAccessParsedLog {
-  @JsonProperty("formatCorrect")
+@Builder
+public class TomcatAccessParsedLog implements ParsedLogData {
   private boolean isFormatCorrect;
   private String ip;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-  private LocalDateTime timestamp;
+  private Instant timestamp;
   private String method;
   private String url;
   private String protocol;
@@ -22,4 +19,23 @@ public class TomcatAccessParsedLog {
   private String referer;
   private String userAgent;
   private String extra;
+  private String userTimezone;
+
+  @Override
+  @JsonIgnore
+  public String getMessage() {
+    return String.format(
+        "%s -- [%s] \"%s %s %s\" %d %d \"%s\" \"%s\" %s",
+        ip,
+        timestamp,
+        method,
+        url,
+        protocol,
+        statusCode,
+        responseSize,
+        referer,
+        userAgent,
+        extra
+    );
+  }
 }
