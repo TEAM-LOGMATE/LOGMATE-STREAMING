@@ -2,6 +2,7 @@ package com.logmate.streaming.search;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.logmate.streaming.common.constant.opensearch.OpenSearchConstant;
+import com.logmate.streaming.common.log.LogType;
 import java.time.Instant;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -27,19 +28,19 @@ public class OpenSearchLogSearchService {
    */
   public List<JsonNode> searchLogs(String agentId,
       Integer thNum,
-      String logType,
+      LogType logType,
       Instant startTime,
       Instant endTime) {
     try {
 
       // 인덱스 패턴 (예: log-spring_boot-logs-*, log-tomcat_access-logs-*)
-      String indexPattern = constant.index.LOG + "-" + logType.toLowerCase() + "-" + constant.index.LOG + "-*";
+      String indexPattern = constant.index.LOG + "-" + logType.getStr().toLowerCase() + "-" + constant.index.LOG + "-*";
 
       // 검색 조건
       Query query = Query.of(q -> q.bool(b -> b
           .must(m -> m.term(t -> t.field("agentId").value(FieldValue.of(agentId))))
           .must(m -> m.term(t -> t.field("thNum").value(FieldValue.of(thNum))))
-          .must(m -> m.term(t -> t.field("logType").value(FieldValue.of(logType))))
+          .must(m -> m.term(t -> t.field("logType").value(FieldValue.of(logType.toString()))))
           .must(m -> m.range(r -> r
               .field("log.timestamp")
               .gte(JsonData.of(startTime))

@@ -1,12 +1,10 @@
 package com.logmate.streaming.controller;
 
+import com.logmate.streaming.common.log.LogType;
 import com.logmate.streaming.search.OpenSearchLogSearchService;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +25,7 @@ public class LogSearchController {
   public ResponseEntity<?> searchLogs(
       @RequestParam String agentId,
       @RequestParam Integer thNum,
-      @RequestParam String logType,
+      @RequestParam LogType logType,
       @RequestParam(required = false)
       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
       Instant startTime,
