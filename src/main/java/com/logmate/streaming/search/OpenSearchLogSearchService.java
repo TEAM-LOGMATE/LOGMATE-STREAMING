@@ -1,8 +1,10 @@
 package com.logmate.streaming.search;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.logmate.streaming.common.constant.opensearch.OpenSearchConstant;
 import com.logmate.streaming.common.log.LogEnvelope;
 import com.logmate.streaming.common.log.LogType;
+import jakarta.json.Json;
 import java.time.Instant;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +28,7 @@ public class OpenSearchLogSearchService {
   /**
    * OpenSearch 로그 검색 (동기)
    */
-  public List<LogEnvelope> searchLogs(String agentId,
+  public List<JsonNode> searchLogs(String agentId,
       Integer thNum,
       LogType logType,
       Instant startTime,
@@ -57,7 +59,7 @@ public class OpenSearchLogSearchService {
       );
 
       // 실행
-      SearchResponse<LogEnvelope> response = client.search(request, LogEnvelope.class);
+      SearchResponse<JsonNode> response = client.search(request, JsonNode.class);
 
       log.info("[OpenSearch] query executed on pattern={} hits={}",
           indexPattern, response.hits().hits().size());
