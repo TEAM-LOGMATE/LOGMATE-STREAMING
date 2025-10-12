@@ -40,14 +40,14 @@ public class OpenSearchLogSearchService {
       Query query = Query.of(q -> q.bool(b -> b
           .must(m -> m.term(t -> t.field("agentId").value(FieldValue.of(agentId))))
           .must(m -> m.term(t -> t.field("thNum").value(FieldValue.of(thNum))))
-          .must(m -> m.term(t -> t.field("logType").value(FieldValue.of(logType.toString()))))
+          .must(m -> m.term(t -> t.field("logType").value(FieldValue.of(logType.name()))))
           .must(m -> m.range(r -> r
               .field("log.timestamp")
               .gte(JsonData.of(startTime))
               .lte(JsonData.of(endTime))
           ))
       ));
-
+      log.info("[OpenSearch] query={}", query.toString());
       // 검색 요청
       SearchRequest request = SearchRequest.of(s -> s
           .index(indexPattern)
