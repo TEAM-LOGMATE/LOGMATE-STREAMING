@@ -1,7 +1,7 @@
 package com.logmate.streaming.search;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.logmate.streaming.common.constant.opensearch.OpenSearchConstant;
+import com.logmate.streaming.common.log.LogEnvelope;
 import com.logmate.streaming.common.log.LogType;
 import java.time.Instant;
 import java.util.List;
@@ -26,7 +26,7 @@ public class OpenSearchLogSearchService {
   /**
    * OpenSearch 로그 검색 (동기)
    */
-  public List<JsonNode> searchLogs(String agentId,
+  public List<LogEnvelope> searchLogs(String agentId,
       Integer thNum,
       LogType logType,
       Instant startTime,
@@ -40,14 +40,14 @@ public class OpenSearchLogSearchService {
       Query query = Query.of(q -> q.bool(b -> b
           .must(m -> m.term(t -> t.field("agentId").value(FieldValue.of(agentId))))
           .must(m -> m.term(t -> t.field("thNum").value(FieldValue.of(thNum))))
-          .must(m -> m.term(t -> t.field("logType").value(FieldValue.of(logType.name()))))
+          .must(m -> m.term(t -> t.field("logType.keyword").value(FieldValue.of(logType.name()))))
           .must(m -> m.range(r -> r
               .field("log.timestamp")
-              .gte(JsonData.of(startTime))
-              .lte(JsonData.of(endTime))
+              .gte(JsonData.of(startTime.toString()))
+              .lte(JsonData.of(endTime.toString()))
           ))
       ));
-      log.info("[OpenSearch] query={}", query.toString());
+      log.info("[OpenSearch] query={}", query);
       // 검색 요청
       SearchRequest request = SearchRequest.of(s -> s
           .index(indexPattern)
@@ -57,7 +57,7 @@ public class OpenSearchLogSearchService {
       );
 
       // 실행
-      SearchResponse<JsonNode> response = client.search(request, JsonNode.class);
+      SearchResponse<LogEnvelope> response = client.search(request, LogEnvelope.class);
 
       log.info("[OpenSearch] query executed on pattern={} hits={}",
           indexPattern, response.hits().hits().size());
