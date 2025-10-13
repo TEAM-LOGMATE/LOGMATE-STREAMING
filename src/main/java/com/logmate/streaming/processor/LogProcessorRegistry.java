@@ -31,7 +31,7 @@ public class LogProcessorRegistry {
 
   @Bean
   public LogProcessor wsProcessor(LogWebSocketHandler webSocketHandler) {
-    return new WebSocketProcessor(webSocketHandler, 1);
+    return new WebSocketProcessor(webSocketHandler, 2);
   }
 
   @Bean
