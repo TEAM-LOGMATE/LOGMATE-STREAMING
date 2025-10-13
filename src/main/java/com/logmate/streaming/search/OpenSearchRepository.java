@@ -37,7 +37,7 @@ public class OpenSearchRepository {
 
       // 검색 조건
       Query query = Query.of(q -> q.bool(b -> b
-          .must(m -> m.term(t -> t.field("agentId").value(FieldValue.of(agentId))))
+          .must(m -> m.term(t -> t.field("agentId.keyword").value(FieldValue.of(agentId))))
           .must(m -> m.term(t -> t.field("thNum").value(FieldValue.of(thNum))))
           .must(m -> m.term(t -> t.field("logType.keyword").value(FieldValue.of(logType.name()))))
           .must(m -> m.range(r -> r
