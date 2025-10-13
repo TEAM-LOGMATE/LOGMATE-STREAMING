@@ -39,7 +39,7 @@ public class JsonNodeMapper {
       if (timestampStr != null && !timestampStr.isEmpty()) {
         Instant utcInstant = Instant.from(ISO_FORMATTER.parse(timestampStr));
         ZoneId userZone = ZoneId.of(timezoneStr);
-        res.setTimestamp(LocalDateTime.ofInstant(utcInstant, userZone).truncatedTo(ChronoUnit.SECONDS)); // user timezone 변환
+        res.setTimestamp(LocalDateTime.ofInstant(utcInstant, userZone).truncatedTo(ChronoUnit.SECONDS).toString()); // user timezone 변환
       }
     } catch (Exception e) {
       res.setTimestamp(null);
@@ -94,7 +94,7 @@ public class JsonNodeMapper {
         Instant utcInstant = Instant.from(ISO_FORMATTER.parse(timestampStr));
         ZoneId userZone = ZoneId.of(timezoneStr);
         // user timezone 변환 + 소수점(밀리초) 제거
-        res.setTimestamp(LocalDateTime.ofInstant(utcInstant, userZone).truncatedTo(ChronoUnit.SECONDS));
+        res.setTimestamp(LocalDateTime.ofInstant(utcInstant, userZone).truncatedTo(ChronoUnit.SECONDS).toString());
       }
     } catch (Exception e) {
       res.setTimestamp(null);

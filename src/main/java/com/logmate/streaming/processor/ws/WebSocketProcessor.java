@@ -1,6 +1,7 @@
 package com.logmate.streaming.processor.ws;
 
 import com.logmate.streaming.common.log.LogEnvelope;
+import com.logmate.streaming.common.util.WebSocketResponseMapper;
 import com.logmate.streaming.processor.LogProcessor;
 import com.logmate.streaming.processor.ws.handler.LogWebSocketHandler;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,14 @@ public class WebSocketProcessor implements LogProcessor {
 
   @Override
   public Mono<LogEnvelope> process(LogEnvelope env) {
+    Object response = switch (env.getLogType()) {
+      case SPRING_BOOT -> WebSocketResponseMapper.toSpringBootRes(env);
+      case TOMCAT_ACCESS -> WebSocketResponseMapper.toTomcatRes(env);
+      default -> throw new IllegalArgumentException("Unsupported logType: " + env.getLogType());
+    };
+
     return Mono.fromRunnable(() -> {
-          wsHandler.push(env.getAgentId(), env.getThNum(), env);
+          wsHandler.push(env.getAgentId(), env.getThNum(), response);
           log.info("[WebSocketProcessor] Log pushed via WebSocket. agentId={}, thNum={}",
               env.getAgentId(), env.getThNum());
         })

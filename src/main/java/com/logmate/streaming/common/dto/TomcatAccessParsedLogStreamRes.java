@@ -16,7 +16,7 @@ import lombok.Setter;
 public class TomcatAccessParsedLogStreamRes {
   private boolean formatCorrect;
   private String ip;
-  private LocalDateTime timestamp;
+  private String timestamp;
   private String method;
   private String url;
   private String protocol;

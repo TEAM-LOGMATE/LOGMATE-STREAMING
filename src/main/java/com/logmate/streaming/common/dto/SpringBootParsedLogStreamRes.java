@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 public class SpringBootParsedLogStreamRes {
   private boolean formatCorrect;
-  private LocalDateTime timestamp;
+  private String timestamp;
   private String level;
   private String thread;
   private String logger;
