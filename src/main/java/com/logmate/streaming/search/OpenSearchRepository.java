@@ -32,7 +32,7 @@ public class OpenSearchRepository {
 
       // 인덱스 패턴
       String indexPattern =
-          constant.index.LOG + "-" + logType.getStr().toLowerCase() + "-" + constant.index.LOG
+          constant.index.PREFIX + "-" + logType.getStr().toLowerCase() + "-" + constant.index.SUFFIX
               + "-*";
 
       // 검색 조건

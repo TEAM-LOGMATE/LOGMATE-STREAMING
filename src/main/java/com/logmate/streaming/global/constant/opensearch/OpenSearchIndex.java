@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class OpenSearchIndex {
 
-  @Value("${opensearch.index.log}")
-  public String LOG;
+  @Value("${opensearch.index.prefix}")
+  public String PREFIX;
+
+  @Value("${opensearch.index.suffix}")
+  public String SUFFIX;
 }
