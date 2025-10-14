@@ -1,6 +1,6 @@
 package com.logmate.streaming.processor.ai.dto;
 
-import com.logmate.streaming.common.log.TomcatAccessParsedLog;
+import com.logmate.streaming.global.log.TomcatAccessParsedLog;
 import lombok.Data;
 
 @Data

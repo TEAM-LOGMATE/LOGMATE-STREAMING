@@ -1,6 +1,6 @@
 package com.logmate.streaming.processor.storage.service;
 
-import com.logmate.streaming.common.log.LogEnvelope;
+import com.logmate.streaming.global.log.LogEnvelope;
 
 /**
  * LogStorageService

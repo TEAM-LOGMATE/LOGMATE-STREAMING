@@ -1,11 +1,9 @@
 package com.logmate.streaming.processor.ai;
 
-import com.logmate.streaming.common.constant.ai.AiConstant;
-import com.logmate.streaming.common.log.TomcatAccessParsedLog;
-import com.logmate.streaming.common.log.LogEnvelope;
+import com.logmate.streaming.global.log.TomcatAccessParsedLog;
+import com.logmate.streaming.global.log.LogEnvelope;
 import com.logmate.streaming.processor.LogProcessor;
-import com.logmate.streaming.processor.ai.client.AiClient;
-import com.logmate.streaming.processor.ai.dto.AiAnalyzeTomcatAccessLogRequest;
+import com.logmate.streaming.processor.ai.service.AiAnalyzeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -14,8 +12,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class AiAnalyzeTomcatAccessLogProcessor implements LogProcessor {
 
-  private final AiClient aiClient;
-  private final AiConstant constant;
+  private final AiAnalyzeService aiAnalyzeService;
   private final int order;
 
   @Override
@@ -38,16 +35,9 @@ public class AiAnalyzeTomcatAccessLogProcessor implements LogProcessor {
    */
   @Override
   public Mono<LogEnvelope> process(LogEnvelope env) {
-    TomcatAccessParsedLog t = (TomcatAccessParsedLog) env.getLog();
-    AiAnalyzeTomcatAccessLogRequest request = AiAnalyzeTomcatAccessLogRequest.from(t);
-
-    return aiClient.analyze(request, constant.getPath())
-        .doOnSubscribe(sub -> log.info("[AI] Sending Tomcat log. agentId={}", env.getAgentId()))
-        .map(ai -> env.setAiScore(ai.getScore()))
-        .onErrorResume(e -> {
-          log.error("[AI] Tomcat analysis failed. agentId={}, error={}", env.getAgentId(), e.getMessage(), e);
-          return Mono.just(env);
-        });
+    log.debug("[AiAnalyzeTomcatAccessLogProcessor] Processing log. agentId={}, logType={}",
+        env.getAgentId(), env.getLogType());
+    return aiAnalyzeService.analyzeTomcatLog(env);
   }
 
 }

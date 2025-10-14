@@ -1,6 +1,6 @@
 package com.logmate.streaming.processor.ai.config;
 
-import com.logmate.streaming.common.constant.ai.AiConstant;
+import com.logmate.streaming.global.constant.ai.AiConstant;
 import io.netty.channel.ChannelOption;
 import java.time.Duration;
 import org.springframework.context.annotation.Bean;
