@@ -4,7 +4,7 @@ package com.logmate.streaming.processor.storage.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.logmate.streaming.common.constant.opensearch.OpenSearchConstant;
+import com.logmate.streaming.global.constant.opensearch.OpenSearchConstant;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHost;
 import org.opensearch.client.RestClient;

@@ -1,6 +1,5 @@
-package com.logmate.streaming.common.dto;
+package com.logmate.streaming.processor.ws.dto;
 
-import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.logmate.streaming.processor;
 
-import com.logmate.streaming.common.log.LogEnvelope;
+import com.logmate.streaming.global.log.LogEnvelope;
 import reactor.core.publisher.Mono;
 
 /**
@@ -15,6 +15,7 @@ import reactor.core.publisher.Mono;
  * 확장 가이드:
  *  - 새로운 로그 처리 단계를 추가하려면 이 인터페이스를 구현한다.
  *  - 예: Ai 처리 Processor, DB 저장 Processor 등
+ *  - 이후 LogProcessorRegistry 에 Bean 으로 등록한다.
  */
 public interface LogProcessor {
   int getOrder();

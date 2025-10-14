@@ -1,9 +1,7 @@
 package com.logmate.streaming.processor.storage.service;
 
-import com.logmate.streaming.common.constant.opensearch.OpenSearchConstant;
-import com.logmate.streaming.common.log.LogEnvelope;
-import com.logmate.streaming.common.log.ParsedLogData;
-import java.time.Instant;
+import com.logmate.streaming.global.constant.opensearch.OpenSearchConstant;
+import com.logmate.streaming.global.log.LogEnvelope;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
