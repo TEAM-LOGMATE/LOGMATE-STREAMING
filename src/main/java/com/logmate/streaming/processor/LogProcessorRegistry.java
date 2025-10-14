@@ -1,8 +1,7 @@
 package com.logmate.streaming.processor;
 
-import com.logmate.streaming.common.constant.ai.AiConstant;
 import com.logmate.streaming.processor.ai.AiAnalyzeTomcatAccessLogProcessor;
-import com.logmate.streaming.processor.ai.client.AiClient;
+import com.logmate.streaming.processor.ai.service.AiAnalyzeService;
 import com.logmate.streaming.processor.storage.LogStorageProcessor;
 import com.logmate.streaming.processor.storage.service.LogStorageService;
 import com.logmate.streaming.processor.ws.handler.LogWebSocketHandler;
@@ -25,13 +24,13 @@ import org.springframework.context.annotation.Configuration;
 public class LogProcessorRegistry {
 
   @Bean
-  public LogProcessor aiProcessor(AiClient aiClient, AiConstant constant) {
-    return new AiAnalyzeTomcatAccessLogProcessor(aiClient, constant, 0);
+  public LogProcessor aiProcessor(AiAnalyzeService analyzeService) {
+    return new AiAnalyzeTomcatAccessLogProcessor( analyzeService, 0);
   }
 
   @Bean
   public LogProcessor wsProcessor(LogWebSocketHandler webSocketHandler) {
-    return new WebSocketProcessor(webSocketHandler, 2);
+    return new WebSocketProcessor(webSocketHandler, 1);
   }
 
   @Bean
