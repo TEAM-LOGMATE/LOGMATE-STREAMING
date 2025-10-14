@@ -1,6 +1,6 @@
-package com.logmate.streaming.consumer.config;
+package com.logmate.streaming.messaging.consumer.config;
 
-import com.logmate.streaming.common.constant.kafka.KafkaConstant;
+import com.logmate.streaming.global.constant.kafka.KafkaConstant;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

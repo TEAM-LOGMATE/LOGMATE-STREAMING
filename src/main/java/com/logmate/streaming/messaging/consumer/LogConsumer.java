@@ -1,4 +1,4 @@
-package com.logmate.streaming.consumer;
+package com.logmate.streaming.messaging.consumer;
 
 /**
  * LogConsumer

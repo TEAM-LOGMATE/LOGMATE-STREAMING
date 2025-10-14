@@ -1,4 +1,4 @@
-package com.logmate.streaming.producer;
+package com.logmate.streaming.messaging.producer;
 
 /**
  * DlqProducer

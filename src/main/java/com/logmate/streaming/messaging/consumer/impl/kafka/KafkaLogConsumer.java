@@ -1,10 +1,10 @@
-package com.logmate.streaming.consumer.impl.kafka;
+package com.logmate.streaming.messaging.consumer.impl.kafka;
 
-import com.logmate.streaming.common.log.LogEnvelope;
-import com.logmate.streaming.consumer.LogConsumer;
-import com.logmate.streaming.common.util.LogParserUtil;
+import com.logmate.streaming.global.log.LogEnvelope;
+import com.logmate.streaming.messaging.consumer.LogConsumer;
+import com.logmate.streaming.global.util.LogParserUtil;
 import com.logmate.streaming.pipeline.LogPipeline;
-import com.logmate.streaming.producer.DlqProducer;
+import com.logmate.streaming.messaging.producer.DlqProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -37,7 +37,7 @@ public class KafkaLogConsumer implements LogConsumer {
   @KafkaListener(topics = "${kafka.topic.log}", groupId = "${spring.kafka.consumer.group-id}")
   public void consume(String json) {
     try {
-      log.info("[KafkaLogConsumer] Consumed log: {}", json);
+      log.debug("[KafkaLogConsumer] Consumed log: {}", json);
 
       // JSON 문자열 → LogEnvelope 객체로 변환
       LogEnvelope env = LogParserUtil.parse(json);
@@ -53,7 +53,7 @@ public class KafkaLogConsumer implements LogConsumer {
           .subscribe();
     } catch (Exception e) {
       // JSON 파싱 실패 시 DLQ 전송
-      log.error("[KafkaLogConsumer] Parsing failed. raw={}", json, e);
+      log.error("[KafkaLogConsumer] Failed to parse log message. rawSize={} bytes", json.length(), e);
       fallback(null, json, e);
     }
   }
@@ -68,6 +68,8 @@ public class KafkaLogConsumer implements LogConsumer {
    */
   private void fallback(String key, String message, Throwable cause) {
     // 실패한 메시지를 DLQ로 전송
+    log.warn("[KafkaLogConsumer] Fallback → DLQ 전송 시작. key={}, cause={}",
+        key != null ? key : "null", cause != null ? cause.getMessage() : "unknown");
     dlqProducer.send(key, message, cause);
   }
 }
