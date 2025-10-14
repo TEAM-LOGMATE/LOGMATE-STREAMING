@@ -1,4 +1,4 @@
-package com.logmate.streaming.common.constant.opensearch;
+package com.logmate.streaming.global.constant.opensearch;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

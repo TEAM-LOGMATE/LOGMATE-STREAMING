@@ -1,4 +1,4 @@
-package com.logmate.streaming.common.constant.ai;
+package com.logmate.streaming.global.constant.ai;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

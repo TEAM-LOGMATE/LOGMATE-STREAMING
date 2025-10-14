@@ -1,4 +1,4 @@
-package com.logmate.streaming.common.config;
+package com.logmate.streaming.global.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

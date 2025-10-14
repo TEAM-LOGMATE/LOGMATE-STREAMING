@@ -1,15 +1,13 @@
-package com.logmate.streaming.common.util;
+package com.logmate.streaming.global.util;
 
-import com.logmate.streaming.common.dto.SpringBootParsedLogWebSocketRes;
-import com.logmate.streaming.common.dto.TomcatAccessParsedLogWebSocketRes;
-import com.logmate.streaming.common.log.LogEnvelope;
-import com.logmate.streaming.common.log.LogType;
-import com.logmate.streaming.common.log.SpringBootParsedLog;
-import com.logmate.streaming.common.log.TomcatAccessParsedLog;
-import java.time.Instant;
+import com.logmate.streaming.global.dto.SpringBootParsedLogWebSocketRes;
+import com.logmate.streaming.global.dto.TomcatAccessParsedLogWebSocketRes;
+import com.logmate.streaming.global.log.LogEnvelope;
+import com.logmate.streaming.global.log.LogType;
+import com.logmate.streaming.global.log.SpringBootParsedLog;
+import com.logmate.streaming.global.log.TomcatAccessParsedLog;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class WebSocketResponseMapper {

@@ -1,8 +1,8 @@
 package com.logmate.streaming.search;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.logmate.streaming.common.constant.opensearch.OpenSearchConstant;
-import com.logmate.streaming.common.log.LogType;
+import com.logmate.streaming.global.constant.opensearch.OpenSearchConstant;
+import com.logmate.streaming.global.log.LogType;
 import java.time.Instant;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

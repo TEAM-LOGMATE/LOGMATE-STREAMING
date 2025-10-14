@@ -1,4 +1,4 @@
-package com.logmate.streaming.common.constant.opensearch;
+package com.logmate.streaming.global.constant.opensearch;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

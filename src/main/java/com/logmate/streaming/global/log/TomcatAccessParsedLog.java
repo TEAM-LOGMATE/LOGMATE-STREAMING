@@ -1,4 +1,4 @@
-package com.logmate.streaming.common.log;
+package com.logmate.streaming.global.log;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.Instant;

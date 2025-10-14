@@ -1,12 +1,12 @@
-package com.logmate.streaming.common.util;
+package com.logmate.streaming.global.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.logmate.streaming.common.log.LogType;
-import com.logmate.streaming.common.log.ParsedLogData;
-import com.logmate.streaming.common.log.LogEnvelope;
+import com.logmate.streaming.global.log.LogType;
+import com.logmate.streaming.global.log.ParsedLogData;
+import com.logmate.streaming.global.log.LogEnvelope;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

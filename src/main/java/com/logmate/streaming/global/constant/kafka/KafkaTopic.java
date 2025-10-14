@@ -1,4 +1,4 @@
-package com.logmate.streaming.common.constant.kafka;
+package com.logmate.streaming.global.constant.kafka;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

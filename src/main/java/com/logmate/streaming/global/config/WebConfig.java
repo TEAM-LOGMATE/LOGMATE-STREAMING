@@ -1,4 +1,4 @@
-package com.logmate.streaming.common.config;
+package com.logmate.streaming.global.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.config.CorsRegistry;

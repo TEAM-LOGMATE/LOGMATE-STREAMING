@@ -1,9 +1,9 @@
-package com.logmate.streaming.common.util;
+package com.logmate.streaming.global.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.logmate.streaming.common.dto.SpringBootParsedLogStreamRes;
-import com.logmate.streaming.common.dto.TomcatAccessParsedLogStreamRes;
-import com.logmate.streaming.common.log.LogType;
+import com.logmate.streaming.global.dto.SpringBootParsedLogStreamRes;
+import com.logmate.streaming.global.dto.TomcatAccessParsedLogStreamRes;
+import com.logmate.streaming.global.log.LogType;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;

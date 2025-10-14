@@ -1,4 +1,4 @@
-package com.logmate.streaming.common.constant.kafka;
+package com.logmate.streaming.global.constant.kafka;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

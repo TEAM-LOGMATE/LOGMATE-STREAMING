@@ -1,7 +1,6 @@
-package com.logmate.streaming.common.dto;
+package com.logmate.streaming.global.dto;
 
-import com.logmate.streaming.common.log.LogType;
-import java.time.LocalDateTime;
+import com.logmate.streaming.global.log.LogType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
