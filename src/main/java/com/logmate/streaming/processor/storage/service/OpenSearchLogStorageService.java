@@ -61,9 +61,9 @@ public class OpenSearchLogStorageService implements LogStorageService {
 
     return String.format(
         "%s-%s-%s-%s",
-        constant.index.LOG,
+        constant.index.PREFIX,
         env.getLogType().getStr().toLowerCase(),
-        constant.index.LOG,
+        constant.index.SUFFIX,
         date
     );
   }
