@@ -1,4 +1,4 @@
-package com.logmate.streaming.common.dto;
+package com.logmate.streaming.ingress.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -11,12 +11,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SpringBootParsedLogStreamReq {
+public class TomcatAccessParsedLogStreamReq {
   private boolean formatCorrect;
+  private String ip;
   private String timestamp;
-  private String level;
-  private String thread;
-  private String logger;
-  private String message;
+  private String method;
+  private String url;
+  private String protocol;
+  private int statusCode;
+  private int responseSize;
+  private String referer;
+  private String userAgent;
+  private String extra;
   private String userTimezone;
 }
