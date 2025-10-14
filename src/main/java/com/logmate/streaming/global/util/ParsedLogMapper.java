@@ -1,9 +1,9 @@
 package com.logmate.streaming.global.util;
 
-import com.logmate.streaming.global.dto.SpringBootParsedLogStreamReq;
-import com.logmate.streaming.global.dto.TomcatAccessParsedLogStreamReq;
 import com.logmate.streaming.global.log.SpringBootParsedLog;
 import com.logmate.streaming.global.log.TomcatAccessParsedLog;
+import com.logmate.streaming.ingress.dto.SpringBootParsedLogStreamReq;
+import com.logmate.streaming.ingress.dto.TomcatAccessParsedLogStreamReq;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;

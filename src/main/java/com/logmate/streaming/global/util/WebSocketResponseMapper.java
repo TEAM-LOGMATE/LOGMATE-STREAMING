@@ -1,11 +1,11 @@
 package com.logmate.streaming.global.util;
 
-import com.logmate.streaming.global.dto.SpringBootParsedLogWebSocketRes;
-import com.logmate.streaming.global.dto.TomcatAccessParsedLogWebSocketRes;
 import com.logmate.streaming.global.log.LogEnvelope;
 import com.logmate.streaming.global.log.LogType;
 import com.logmate.streaming.global.log.SpringBootParsedLog;
 import com.logmate.streaming.global.log.TomcatAccessParsedLog;
+import com.logmate.streaming.processor.ws.dto.SpringBootParsedLogWebSocketRes;
+import com.logmate.streaming.processor.ws.dto.TomcatAccessParsedLogWebSocketRes;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Objects;

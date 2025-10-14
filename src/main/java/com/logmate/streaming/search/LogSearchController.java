@@ -1,7 +1,6 @@
-package com.logmate.streaming.controller;
+package com.logmate.streaming.search;
 
-import com.logmate.streaming.common.log.LogType;
-import com.logmate.streaming.search.OpenSearchLogSearchService;
+import com.logmate.streaming.global.log.LogType;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import lombok.RequiredArgsConstructor;
